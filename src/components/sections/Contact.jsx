@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +8,14 @@ export const Contact = () => {
     email: "",
     message: "",
   });
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+
+  const showAlert = (message, type) => {
+    setAlert({ show: true, message, type });
+    setTimeout(() => {
+      setAlert({ show: false, message: "", type: "" });
+    }, 3000);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,11 +27,14 @@ export const Contact = () => {
         e.target,
         import.meta.env.VITE_PUBLIC_KEY
       )
-      .then((result) => {
-        alert("Message Sent!");
+      .then(() => {
+        showAlert("Message sent successfully! I'll get back to you soon.", "success");
         setFormData({ name: "", email: "", message: "" });
       })
-      .catch(() => alert("Oops! Something went wrong. Please try again."));
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        showAlert("Oops! Something went wrong. Please try again.", "error");
+      });
   };
 
   return (
@@ -31,6 +42,15 @@ export const Contact = () => {
       id="contact"
       className="min-h-screen flex items-center justify-center py-20"
     >
+      {alert.show && (
+        <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
+          alert.type === "success" 
+            ? "bg-green-500/90 text-white" 
+            : "bg-red-500/90 text-white"
+        }`}>
+          {alert.message}
+        </div>
+      )}
       <RevealOnScroll>
         <div className="px-4 w-full min-w-[300px] md:w-[500px] sm:w-2/3 p-6">
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
