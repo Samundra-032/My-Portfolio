@@ -14,9 +14,9 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
             <div className="w-9 h-9 rounded-full bg-[#0ea5e9] flex items-center justify-center">
               <span className="text-white font-bold text-lg">S</span>
             </div>
-            <span className="ml-2 text-lg font-semibold text-white">
+            {/* <span className="ml-2 text-lg font-semibold text-white">
               Samundra<span className="text-[#0ea5e9]">.</span>
-            </span>
+            </span> */}
           </div>
           
           {/* Desktop Navigation */}
