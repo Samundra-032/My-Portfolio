@@ -6,5 +6,5 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   // github last url name
-  base: "/portfolio",
+  base: '/My-Portfolio/',
 });
